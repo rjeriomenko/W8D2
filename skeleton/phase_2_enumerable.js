@@ -78,11 +78,21 @@ function testmyMap() {
 testmyMap();
 
 
-Array.prototype.myReduce = function(callback) {
+Array.prototype.myReduce = function(callback, accumulator) {
+    const arr = this;
+    let startIndex = 0;
+    if (!accumulator) {
+        accumulator = arr[0];
+        startIndex = 1;
+    }
 
+    this.slice(startIndex).myEach(function(ele) {
+        accumulator = callback(ele, accumulator);
+    })
 
-
-
-
+    return accumulator;
 } 
 
+console.log([5,6,7,8,9,10].myReduce(function(ele, accumulator) {
+    return ele + accumulator;
+}, 10));
